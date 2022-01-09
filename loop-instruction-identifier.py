@@ -23,21 +23,31 @@ def convert_string(stringFile):
 
 def id_loops(contentList):
     loopList = []
+    indexList = []
     for line in contentList:
         if "for" in line:
             loopList.append(line)
+            indexList.append(contentList.index(line))
         elif "while" in line:
             loopList.append(line)
-    
+            indexList.append(contentList.index(line))
+    return indexList, loopList
+
+def perforarte_loop(loopList):
+    perforated = []
     for loop in loopList:
-        loop = loop.replace(" ","")
-        loop = loop.replace("(","")
-        loop = loop.replace(")","")
-        loop = loop.replace("{","")
+        index = loopList.index(loop)
         loop = loop.replace("i++","i+=2")
-        print(loop)
-        
-    return loopList
+        loopList[index] = loop
+
+def make_perforated_file(indexList, contentList, loopList):
+    for i in range(0,len(indexList)):
+        contentList[indexList[i]] = loopList[i]
+    perforatedFile = open("perf.cpp","w")
+    for element in contentList:
+        perforatedFile.write(element +"\n")
+    print(contentList)
+    return contentList
 
 
 #the main function
@@ -45,8 +55,11 @@ def main():
     file_contents = read_c_file()
     content_list = convert_string(file_contents)
     # print(content_list)
-    loopList = id_loops(content_list)
+    indexList, loopList = id_loops(content_list)
+    perforarte_loop(loopList)
+    perf = make_perforated_file(indexList,content_list,loopList)
     print(loopList)
+    print(indexList)
     print(type(file_contents))
 
 if __name__=='__main__':
