@@ -1,6 +1,4 @@
 import os
-import re
-import pandas as pd
 import errno
 import subprocess
 
