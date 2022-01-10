@@ -9,8 +9,8 @@
 void blur( )
 {
   /* Initialization of image2[y][x] */
-  for (int ya = 0; ya < y_size1; ya+=10) {
-    for (int xa = 0; xa < x_size1; xa+=10) {
+  for (int ya = 0; ya < y_size1; ya++) {
+    for (int xa = 0; xa < x_size1; xa++) {
       image2[ya][xa] = image1[ya][xa];
     }
   }
@@ -18,12 +18,12 @@ void blur( )
   x_size2 = x_size1;
   y_size2 = y_size1;
 
-  for (int i = RADIUS; i < y_size1 - RADIUS; i+=10) {
-    for (int j = RADIUS; j < x_size1 - RADIUS; j+=10) {
+  for (int i = RADIUS; i < y_size1 - RADIUS; i++) {
+    for (int j = RADIUS; j < x_size1 - RADIUS; j++) {
       double blur = 0.0;
       int total = 0;
-      for (int ii = i - RADIUS; ii <= i + RADIUS ; ii+=10) {
-        for (int jj = j - RADIUS; jj <= j + RADIUS ; jj+=10) {
+      for (int ii = i - RADIUS; ii <= i + RADIUS ; ii++) {
+        for (int jj = j - RADIUS; jj <= j + RADIUS ; jj++) {
           blur += image1[ii][jj];
           total++;
         }
@@ -45,4 +45,3 @@ int main(int argc, const char** argv)
   save_image_data();   /* Output of image2 */
   return 0;
 }
-
