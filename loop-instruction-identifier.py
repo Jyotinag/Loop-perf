@@ -1,6 +1,4 @@
 import os
-import re
-import pandas as pd
 import errno
 import subprocess
 
@@ -47,7 +45,7 @@ def make_perforated_file(indexList, contentList, loopList):
     perforatedFile = open("perf.cpp","w")
     for element in contentList:
         perforatedFile.write(element +"\n")
-    print(contentList)
+    # print(contentList)
     return contentList
 
 def analysis_perf(perfFileName, fileName):
@@ -73,6 +71,25 @@ def analysis_perf(perfFileName, fileName):
             stdout=outfile,
             universal_newlines=True)
 
+def error_metrice(resExact, resPerf):
+    ratio = abs(float(resExact)-float(resPerf))/float(resExact)
+    return ratio
+
+def error_management():
+    try:
+        with open("outputperf.txt","r") as perfFile:
+            resPerf = perfFile.read()
+            resPerf.replace('\n','')
+        with open("output.txt","r") as exactFile:
+            resExact = exactFile.read()
+            resExact.replace('\n','')
+        return resExact,resPerf
+    except:
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT), "outputperf.txt", "output.txt"
+        )
+        
+
 
 #the main function
 def main():
@@ -83,9 +100,13 @@ def main():
     perforarte_loop(loopList)
     perf = make_perforated_file(indexList,content_list,loopList)
     analysis_perf("perf.cpp", fileName)
-    print(loopList)
-    print(indexList)
-    print(type(file_contents))
+    resExact,resPerf = error_management()
+    print(resExact)
+    print(resPerf)
+    print(error_metrice(resExact,resPerf))
+    # print(loopList)
+    # print(indexList)
+    # print(type(file_contents))
 
 if __name__=='__main__':
     main()
