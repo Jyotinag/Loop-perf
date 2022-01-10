@@ -36,7 +36,7 @@ def perforarte_loop(loopList):
     perforated = []
     for loop in loopList:
         index = loopList.index(loop)
-        loop = loop.replace("i++","i+=2")
+        loop = loop.replace("++","+=10")
         loopList[index] = loop
 
 def make_perforated_file(indexList, contentList, loopList):
