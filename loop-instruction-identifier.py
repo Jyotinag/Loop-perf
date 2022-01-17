@@ -42,7 +42,7 @@ def perforarte_loop(loopList):
 def make_perforated_file(indexList, contentList, loopList):
     for i in range(0,len(indexList)):
         contentList[indexList[i]] = loopList[i]
-    perforatedFile = open("perf.cpp","w")
+    perforatedFile = open("perf.c","w")
     for element in contentList:
         perforatedFile.write(element +"\n")
     # print(contentList)
@@ -99,7 +99,7 @@ def main():
     indexList, loopList = id_loops(content_list)
     perforarte_loop(loopList)
     perf = make_perforated_file(indexList,content_list,loopList)
-    analysis_perf("perf.cpp", fileName)
+    analysis_perf("perf.c", fileName)
     resExact,resPerf = error_management()
     print(resExact)
     print(resPerf)
