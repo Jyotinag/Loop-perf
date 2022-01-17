@@ -370,7 +370,7 @@ int main (int argc, char **argv)
     // alloc spaces for the option data
     data = (OptionData*)malloc(numOptions*sizeof(OptionData));
     prices = (fptype*)malloc(numOptions*sizeof(fptype));
-    for ( loopnum = 0; loopnum < numOptions; +=10 loopnum )
+    for ( loopnum = 0; loopnum < numOptions; loopnum+=10  )
     {
         rv = fscanf(file, "%f %f %f %f %f %f %c %f %f", &data[loopnum].s, &data[loopnum].strike, &data[loopnum].r, &data[loopnum].divq, &data[loopnum].v, &data[loopnum].t, &data[loopnum].OptionType, &data[loopnum].divs, &data[loopnum].DGrefval);
         if(rv != 9) {

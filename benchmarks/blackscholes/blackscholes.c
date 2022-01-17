@@ -227,7 +227,7 @@ struct mainWork {
     int begin = range.begin();
     int end = range.end();
 
-    for (int i=begin; i!=end; i+=10) {
+    for (int i=begin; i!=end; i++) {
       /* Calling main function to calculate option value based on
        * Black & Scholes's equation.
        */
@@ -262,7 +262,7 @@ int bs_thread(void *tid_ptr) {
     tbb::affinity_partitioner a;
 
     mainWork doall;
-    for (j=0; j<NUM_RUNS; j+=10) {
+    for (j=0; j<NUM_RUNS; j++) {
       tbb::parallel_for(tbb::blocked_range<int>(0, numOptions), doall, a);
     }
 
@@ -285,9 +285,9 @@ int bs_thread(void *tid_ptr) {
     for (j=0; j<NUM_RUNS; j++) {
 #ifdef ENABLE_OPENMP
 #pragma omp parallel for private(i, price, priceDelta)
-        for (i=0; i<numOptions; i+=10) {
+        for (i=0; i<numOptions; i++) {
 #else  //ENABLE_OPENMP
-        for (i=start; i<end; i+=10) {
+        for (i=start; i<end; i++) {
 #endif //ENABLE_OPENMP
             /* Calling main function to calculate option value based on
              * Black & Scholes's equation.
@@ -370,7 +370,7 @@ int main (int argc, char **argv)
     // alloc spaces for the option data
     data = (OptionData*)malloc(numOptions*sizeof(OptionData));
     prices = (fptype*)malloc(numOptions*sizeof(fptype));
-    for ( loopnum = 0; loopnum < numOptions; +=10 loopnum )
+    for ( loopnum = 0; loopnum < numOptions; ++ loopnum )
     {
         rv = fscanf(file, "%f %f %f %f %f %f %c %f %f", &data[loopnum].s, &data[loopnum].strike, &data[loopnum].r, &data[loopnum].divq, &data[loopnum].v, &data[loopnum].t, &data[loopnum].OptionType, &data[loopnum].divs, &data[loopnum].DGrefval);
         if(rv != 9) {
@@ -404,7 +404,7 @@ int main (int argc, char **argv)
     buffer2 = (int *) malloc(numOptions * sizeof(fptype) + PAD);
     otype = (int *) (((unsigned long long)buffer2 + PAD) & ~(LINESIZE - 1));
 
-    for (i=0; i<numOptions; i+=10) {
+    for (i=0; i<numOptions; i++) {
         otype[i]      = (data[i].OptionType == 'P') ? 1 : 0;
         sptprice[i]   = data[i].s;
         strike[i]     = data[i].strike;
@@ -426,7 +426,7 @@ int main (int argc, char **argv)
     threads = (HANDLE *) malloc (nThreads * sizeof(HANDLE));
     nums = (int *) malloc (nThreads * sizeof(int));
 
-    for(i=0; i<nThreads; i+=10) {
+    for(i=0; i<nThreads; i++) {
         nums[i] = i;
         threads[i] = CreateThread(0, 0, bs_thread, &nums[i], 0, 0);
     }
@@ -481,7 +481,7 @@ int main (int argc, char **argv)
       fclose(file);
       exit(1);
     }
-    for(i=0; i<numOptions; i+=10) {
+    for(i=0; i<numOptions; i++) {
       rv = fprintf(file, "%.18f\n", prices[i]);
       if(rv < 0) {
         printf("ERROR: Unable to write to file `%s'.\n", outputFile);
@@ -507,5 +507,4 @@ int main (int argc, char **argv)
 
     return 0;
 }
-
 
